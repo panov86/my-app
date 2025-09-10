@@ -1,14 +1,35 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="bg">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Стани богат: Българска история</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+    <div id="game-container">
+        <div id="start-screen">
+            <h1>Стани богат</h1>
+            <h2>Тема: Българска история</h2>
+            <button id="start-button">Започни играта</button>
+        </div>
+        <div id="quiz-screen" class="hidden">
+            <div id="header">
+                <div id="timer">30</div>
+                <div id="score">Точки: 0</div>
+            </div>
+            <div id="question-container">
+                <p id="question"></p>
+                <div id="answers">
+                </div>
+            </div>
+        </div>
+        <div id="end-screen" class="hidden">
+            <h1>Край на играта</h1>
+            <p>Вашият резултат: <span id="final-score"></span></p>
+            <button id="restart-button">Нова игра</button>
+        </div>
+    </div>
+    <script src="main.js"></script>
 </body>
 </html>
