@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Колко добре знаеш българската история</title>
+    <title>Колко добре познаваш историята на България</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="game-container">
         <div id="start-screen">
-            <h1>Колко добре знаеш българската история</h1>
+            <h1>Колко добре познаваш историята на България</h1>
             <input type="text" id="player-name" placeholder="Въведи име">
             <button id="start-button">Започни играта</button>
-            <div id="leaderboard">
+            <div id="start-leaderboard" class="leaderboard-container">
                 <h2>Класация</h2>
-                <ol id="leaderboard-list"></ol>
+                <ol id="start-leaderboard-list"></ol>
             </div>
         </div>
         <div id="quiz-screen" class="hidden">
@@ -29,22 +29,26 @@
                 <p id="question"></p>
                 <div id="answers">
                 </div>
+                <div id="rating-container" class="hidden">
+                    <div id="stars">
+                        <span class="star" data-value="1">&#9733;</span>
+                        <span class="star" data-value="2">&#9733;</span>
+                        <span class="star" data-value="3">&#9733;</span>
+                        <span class="star" data-value="4">&#9733;</span>
+                        <span class="star" data-value="5">&#9733;</span>
+                    </div>
+                    <p>Благодаря за отделеното време, с уважение Иван Панов</p>
+                </div>
             </div>
             <button id="give-up-button">Отказвам се</button>
         </div>
         <div id="end-screen" class="hidden">
             <h1>Край на играта</h1>
             <p>Вашият резултат: <span id="final-score"></span></p>
-            <div id="rating-container">
-                <div id="stars">
-                    <span class="star" data-value="1">&#9733;</span>
-                    <span class="star" data-value="2">&#9733;</span>
-                    <span class="star" data-value="3">&#9733;</span>
-                    <span class="star" data-value="4">&#9733;</span>
-                    <span class="star" data-value="5">&#9733;</span>
-                </div>
+            <div id="end-leaderboard" class="leaderboard-container">
+                <h2>Класация</h2>
+                <ol id="end-leaderboard-list"></ol>
             </div>
-            <p>Благодаря за отделеното време, с уважение Иван Панов</p>
             <button id="restart-button">Нова игра</button>
         </div>
     </div>

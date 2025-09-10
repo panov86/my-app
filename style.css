@@ -82,22 +82,24 @@ button:active {
     text-align: center;
 }
 
-#leaderboard {
+.leaderboard-container {
     margin-top: 40px;
+    width: 100%;
+    max-width: 400px;
 }
 
-#leaderboard-list {
+#start-leaderboard-list, #end-leaderboard-list {
     list-style-type: none;
     padding: 0;
 }
 
-#leaderboard-list li {
+#start-leaderboard-list li, #end-leaderboard-list li {
     font-size: 1.2rem;
     padding: 10px 0;
     border-bottom: 1px solid #bdc3c7;
 }
 
-#leaderboard-list li:last-child {
+#start-leaderboard-list li:last-child, #end-leaderboard-list li:last-child {
     border-bottom: none;
 }
 
@@ -140,6 +142,7 @@ button:active {
 
 #question-container {
     margin-bottom: 20px;
+    position: relative;
 }
 
 #question {
@@ -202,6 +205,11 @@ button:active {
 
 #rating-container {
     margin: 20px 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
 }
 
 #stars {

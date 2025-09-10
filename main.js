@@ -13,7 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const answersElement = document.getElementById('answers');
     const finalScoreElement = document.getElementById('final-score');
     const playerNameInput = document.getElementById('player-name');
-    const leaderboardList = document.getElementById('leaderboard-list');
+    const startLeaderboardList = document.getElementById('start-leaderboard-list');
+    const endLeaderboardList = document.getElementById('end-leaderboard-list');
+    const ratingContainer = document.getElementById('rating-container');
     const stars = document.querySelectorAll('.star');
 
     // Sound Elements
@@ -367,7 +369,7 @@ document.addEventListener('DOMContentLoaded', () => {
     restartButton.addEventListener('click', () => {
         endScreen.classList.add('hidden');
         startScreen.classList.remove('hidden');
-        updateLeaderboard();
+        updateLeaderboardDisplay();
     });
     giveUpButton.addEventListener('click', endGame);
     joker5050Button.addEventListener('click', useJoker5050);
@@ -390,7 +392,7 @@ document.addEventListener('DOMContentLoaded', () => {
         startSound.play();
         score = 0;
         currentQuestionIndex = 0;
-        jokers5050 = 0;
+        jokers5050 = 1; // Start with one joker
         correctAnswersCount = 0;
         shuffledQuestions = [...allQuestions];
         shuffle(shuffledQuestions);
@@ -398,6 +400,10 @@ document.addEventListener('DOMContentLoaded', () => {
         startScreen.classList.add('hidden');
         endScreen.classList.add('hidden');
         quizScreen.classList.remove('hidden');
+        ratingContainer.classList.add('hidden');
+        questionElement.classList.remove('hidden');
+        answersElement.classList.remove('hidden');
+        giveUpButton.classList.remove('hidden');
         updateScore();
         updateJokerButton();
         showNextQuestion();
@@ -435,7 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
             button.disabled = false;
             button.style.display = '';
         });
-        joker5050Button.disabled = jokers5050 <= 0;
+        updateJokerButton(); // Update button state at the beginning of each question
     }
 
     function startTimer() {
@@ -456,11 +462,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedButton = e.target;
         const correct = selectedButton.dataset.correct === 'true';
 
+        Array.from(answersElement.children).forEach(button => {
+            button.disabled = true;
+        });
+
         if (correct) {
             correctSound.play();
             score += 10; 
             correctAnswersCount++;
-            if (correctAnswersCount % 5 === 0) {
+            if (correctAnswersCount > 0 && correctAnswersCount % 5 === 0) {
                 jokers5050++;
                 updateJokerButton();
             }
@@ -471,7 +481,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             incorrectSound.play();
             setStatusClass(selectedButton, false);
-            setTimeout(endGame, 1000); 
+            showRating();
         }
     }
 
@@ -500,7 +510,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const answers = Array.from(answersElement.children);
             const incorrectButtons = answers.filter(button => button.dataset.correct !== 'true');
             
-            incorrectButtons.sort(() => Math.random() - 0.5);
+            shuffle(incorrectButtons);
             incorrectButtons[0].style.display = 'none';
             incorrectButtons[1].style.display = 'none';
 
@@ -511,10 +521,30 @@ document.addEventListener('DOMContentLoaded', () => {
     function endGame() {
         endSound.play();
         clearInterval(timer);
-        quizScreen.classList.add('hidden');
-        endScreen.classList.remove('hidden');
-        finalScoreElement.innerText = score;
-        updateLeaderboard(playerName, score);
+        showRating();
+    }
+
+    function showRating() {
+        questionElement.classList.add('hidden');
+        answersElement.classList.add('hidden');
+        giveUpButton.classList.add('hidden');
+        joker5050Button.classList.add('hidden'); // Hide joker button as well
+        ratingContainer.classList.remove('hidden');
+
+        setTimeout(() => {
+            quizScreen.classList.add('hidden');
+            endScreen.classList.remove('hidden');
+            finalScoreElement.innerText = score;
+            updateLeaderboard(playerName, score);
+            updateLeaderboardDisplay();
+            
+            // Reset for next game
+            joker5050Button.classList.remove('hidden');
+            ratingContainer.classList.add('hidden');
+            questionElement.classList.remove('hidden');
+            answersElement.classList.remove('hidden');
+            giveUpButton.classList.remove('hidden');
+        }, 5000);
     }
 
     function updateLeaderboard(name, score) {
@@ -524,12 +554,20 @@ document.addEventListener('DOMContentLoaded', () => {
             leaderboard = leaderboard.slice(0, 3);
             localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
         }
-        
-        leaderboardList.innerHTML = '';
+    }
+
+    function updateLeaderboardDisplay() {
+        startLeaderboardList.innerHTML = '';
+        endLeaderboardList.innerHTML = '';
+
         leaderboard.forEach(entry => {
-            const li = document.createElement('li');
-            li.innerText = `${entry.name}: ${entry.score}`;
-            leaderboardList.appendChild(li);
+            const startLi = document.createElement('li');
+            startLi.innerText = `${entry.name}: ${entry.score}`;
+            startLeaderboardList.appendChild(startLi);
+
+            const endLi = document.createElement('li');
+            endLi.innerText = `${entry.name}: ${entry.score}`;
+            endLeaderboardList.appendChild(endLi);
         });
     }
 
@@ -542,10 +580,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 star.classList.remove('selected');
             }
         });
-        // Here you could send the rating to a server if you had one
         console.log(`Rated with ${selectedValue} stars`);
     }
 
     // Initial leaderboard display
-    updateLeaderboard();
+    updateLeaderboardDisplay();
 });
