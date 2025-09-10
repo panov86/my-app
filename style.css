@@ -38,7 +38,7 @@ body {
 
 /* Typography and elements */
 h1 {
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: #2c3e50;
     margin-bottom: 10px;
     font-weight: 700;
@@ -61,6 +61,7 @@ button {
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
     box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+    margin-top: 10px;
 }
 
 button:hover {
@@ -72,11 +73,39 @@ button:active {
     transform: translateY(0);
 }
 
+#player-name {
+    padding: 15px;
+    border-radius: 50px;
+    border: 2px solid #bdc3c7;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#leaderboard {
+    margin-top: 40px;
+}
+
+#leaderboard-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#leaderboard-list li {
+    font-size: 1.2rem;
+    padding: 10px 0;
+    border-bottom: 1px solid #bdc3c7;
+}
+
+#leaderboard-list li:last-child {
+    border-bottom: none;
+}
+
 #header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     font-size: 1.5rem;
     color: #2c3e50;
 }
@@ -94,8 +123,23 @@ button:active {
     box-shadow: 0 4px 10px rgba(231, 76, 60, 0.5);
 }
 
+#jokers {
+    margin-bottom: 20px;
+}
+
+.joker-button {
+    background-color: #f1c40f;
+    box-shadow: 0 4px 15px rgba(241, 196, 15, 0.4);
+}
+
+.joker-button:disabled {
+    background-color: #95a5a6;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
 #question-container {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 #question {
@@ -108,6 +152,7 @@ button:active {
     display: grid;
     grid-template-columns: 1fr;
     gap: 15px;
+    margin-bottom: 20px;
 }
 
 .answer-button {
@@ -120,6 +165,7 @@ button:active {
     text-align: left;
     cursor: pointer;
     transition: all 0.3s;
+    margin-top: 0;
 }
 
 .answer-button:hover {
@@ -139,6 +185,11 @@ button:active {
     border-color: #c0392b;
 }
 
+#give-up-button {
+    background-color: #e67e22;
+    box-shadow: 0 4px 15px rgba(230, 126, 34, 0.4);
+}
+
 #final-score {
     font-size: 2rem;
     font-weight: bold;
@@ -149,8 +200,33 @@ button:active {
     margin-top: 20px;
 }
 
+#rating-container {
+    margin: 20px 0;
+}
+
+#stars {
+    font-size: 2.5rem;
+    cursor: pointer;
+}
+
+.star {
+    color: #bdc3c7;
+    transition: color 0.2s;
+}
+
+.star.selected,
+.star:hover,
+.star:hover ~ .star {
+    color: #f1c40f;
+}
+
+
+
 @media (min-width: 600px) {
     #answers {
         grid-template-columns: repeat(2, 1fr);
+    }
+    h1 {
+        font-size: 3rem;
     }
 }

@@ -3,33 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Стани богат: Българска история</title>
+    <title>Колко добре знаеш българската история</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="game-container">
         <div id="start-screen">
-            <h1>Стани богат</h1>
-            <h2>Тема: Българска история</h2>
+            <h1>Колко добре знаеш българската история</h1>
+            <input type="text" id="player-name" placeholder="Въведи име">
             <button id="start-button">Започни играта</button>
+            <div id="leaderboard">
+                <h2>Класация</h2>
+                <ol id="leaderboard-list"></ol>
+            </div>
         </div>
         <div id="quiz-screen" class="hidden">
             <div id="header">
                 <div id="timer">30</div>
                 <div id="score">Точки: 0</div>
             </div>
+            <div id="jokers">
+                <button id="joker-50-50" class="joker-button" disabled>50/50</button>
+            </div>
             <div id="question-container">
                 <p id="question"></p>
                 <div id="answers">
                 </div>
             </div>
+            <button id="give-up-button">Отказвам се</button>
         </div>
         <div id="end-screen" class="hidden">
             <h1>Край на играта</h1>
             <p>Вашият резултат: <span id="final-score"></span></p>
+            <div id="rating-container">
+                <div id="stars">
+                    <span class="star" data-value="1">&#9733;</span>
+                    <span class="star" data-value="2">&#9733;</span>
+                    <span class="star" data-value="3">&#9733;</span>
+                    <span class="star" data-value="4">&#9733;</span>
+                    <span class="star" data-value="5">&#9733;</span>
+                </div>
+            </div>
+            <p>Благодаря за отделеното време, с уважение Иван Панов</p>
             <button id="restart-button">Нова игра</button>
         </div>
     </div>
+
+    <audio id="start-sound" src="sounds/start.mp3"></audio>
+    <audio id="correct-sound" src="sounds/correct.mp3"></audio>
+    <audio id="incorrect-sound" src="sounds/incorrect.mp3"></audio>
+    <audio id="end-sound" src="sounds/end.mp3"></audio>
+
     <script src="main.js"></script>
 </body>
 </html>
