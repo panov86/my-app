@@ -212,20 +212,24 @@ button:active {
     width: 100%;
 }
 
+#rating-container p {
+    color: red;
+}
+
 #stars {
     font-size: 2.5rem;
     cursor: pointer;
 }
 
 .star {
-    color: #bdc3c7;
+    color: #fdebd0; /* Light yellow for unselected stars */
     transition: color 0.2s;
 }
 
 .star.selected,
 .star:hover,
 .star:hover ~ .star {
-    color: #f1c40f;
+    color: #f1c40f; /* Vibrant yellow for selected/hovered stars */
 }
 
 
