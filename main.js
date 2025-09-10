@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const finalScoreElement = document.getElementById('final-score');
     const playerNameInput = document.getElementById('player-name');
     const startLeaderboardList = document.getElementById('start-leaderboard-list');
+    const endLeaderboard = document.getElementById('end-leaderboard');
     const endLeaderboardList = document.getElementById('end-leaderboard-list');
     const ratingContainer = document.getElementById('rating-container');
     const stars = document.querySelectorAll('.star');
@@ -371,7 +372,10 @@ document.addEventListener('DOMContentLoaded', () => {
         startScreen.classList.remove('hidden');
         updateLeaderboardDisplay();
     });
-    giveUpButton.addEventListener('click', endGame);
+    giveUpButton.addEventListener('click', () => {
+        incorrectSound.play();
+        endGame();
+    });
     joker5050Button.addEventListener('click', useJoker5050);
     stars.forEach(star => star.addEventListener('click', rateGame));
 
@@ -392,7 +396,7 @@ document.addEventListener('DOMContentLoaded', () => {
         startSound.play();
         score = 0;
         currentQuestionIndex = 0;
-        jokers5050 = 1; // Start with one joker
+        jokers5050 = 1;
         correctAnswersCount = 0;
         shuffledQuestions = [...allQuestions];
         shuffle(shuffledQuestions);
@@ -400,10 +404,6 @@ document.addEventListener('DOMContentLoaded', () => {
         startScreen.classList.add('hidden');
         endScreen.classList.add('hidden');
         quizScreen.classList.remove('hidden');
-        ratingContainer.classList.add('hidden');
-        questionElement.classList.remove('hidden');
-        answersElement.classList.remove('hidden');
-        giveUpButton.classList.remove('hidden');
         updateScore();
         updateJokerButton();
         showNextQuestion();
@@ -441,7 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
             button.disabled = false;
             button.style.display = '';
         });
-        updateJokerButton(); // Update button state at the beginning of each question
+        updateJokerButton();
     }
 
     function startTimer() {
@@ -481,7 +481,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             incorrectSound.play();
             setStatusClass(selectedButton, false);
-            showRating();
+            setTimeout(endGame, 1000);
         }
     }
 
@@ -521,30 +521,20 @@ document.addEventListener('DOMContentLoaded', () => {
     function endGame() {
         endSound.play();
         clearInterval(timer);
-        showRating();
-    }
+        quizScreen.classList.add('hidden');
+        endScreen.classList.remove('hidden');
 
-    function showRating() {
-        questionElement.classList.add('hidden');
-        answersElement.classList.add('hidden');
-        giveUpButton.classList.add('hidden');
-        joker5050Button.classList.add('hidden'); // Hide joker button as well
         ratingContainer.classList.remove('hidden');
+        endLeaderboard.classList.add('hidden');
+
+        finalScoreElement.innerText = score;
+        updateLeaderboard(playerName, score);
+        updateLeaderboardDisplay();
 
         setTimeout(() => {
-            quizScreen.classList.add('hidden');
-            endScreen.classList.remove('hidden');
-            finalScoreElement.innerText = score;
-            updateLeaderboard(playerName, score);
-            updateLeaderboardDisplay();
-            
-            // Reset for next game
-            joker5050Button.classList.remove('hidden');
             ratingContainer.classList.add('hidden');
-            questionElement.classList.remove('hidden');
-            answersElement.classList.remove('hidden');
-            giveUpButton.classList.remove('hidden');
-        }, 5000);
+            endLeaderboard.classList.remove('hidden');
+        }, 10000);
     }
 
     function updateLeaderboard(name, score) {
